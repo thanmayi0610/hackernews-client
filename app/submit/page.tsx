@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import betterAuthClient from "@/lib/integrations/better-auth";
+import { serverUrl } from "@/environment";
 
 const SubmitPage = () => {
   const router = useRouter();
@@ -21,7 +22,7 @@ const SubmitPage = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:3000/posts", {
+      const res = await fetch(`${serverUrl}/posts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

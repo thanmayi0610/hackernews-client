@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FaThumbsUp, FaRegThumbsUp } from "react-icons/fa";
 import betterAuthClient from "@/lib/integrations/better-auth";
 import { formatDistanceToNow } from "date-fns";
+import { serverUrl } from "@/environment";
 
 type Post = {
   id: string;
@@ -33,7 +34,7 @@ const NewPostsPage = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch("http://localhost:3000/posts", {
+        const res = await fetch(`${serverUrl}/posts`, {
           credentials: "include",
         });
 
@@ -47,7 +48,7 @@ const NewPostsPage = () => {
         setPosts(result.data.posts);
 
         result.data.posts.forEach(async (post: Post) => {
-          const likeRes = await fetch(`http://localhost:3000/likes/on/${post.id}`, {
+          const likeRes = await fetch(`${serverUrl}/likes/on/${post.id}`, {
             credentials: "include",
           });
 
@@ -74,7 +75,7 @@ const NewPostsPage = () => {
     const isLiked = likedPosts[postId];
 
     try {
-      const url = `http://localhost:3000/likes/on/${postId}`;
+      const url = `${serverUrl}/likes/on/${postId}`;
       const res = await fetch(url, {
         method: isLiked ? "DELETE" : "POST",
         credentials: "include",
@@ -98,7 +99,7 @@ const NewPostsPage = () => {
     if (!confirm("Are you sure you want to delete this post?")) return;
 
     try {
-      const res = await fetch(`http://localhost:3000/posts/${postId}`, {
+      const res = await fetch(`${serverUrl}//posts/${postId}`, {
         method: "DELETE",
         credentials: "include",
       });
